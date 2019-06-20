@@ -1,0 +1,41 @@
+<div class="login container-fluid">
+  <!-- loading  -->
+  <loading 
+    :active.sync="isLoading"
+    color="rgba(36, 94, 96,1)"
+    loader="dots"
+  >
+  </loading>
+  
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <transition name="scale" mode="out-in" appear>
+      <div class="login-box">     
+        <md-card md-with-hover>
+            <md-card-header>
+              <div class="md-title">H’SVIBE 客服後台</div>
+              <div class="md-subhead">登入帳號密碼</div>
+            </md-card-header>
+    
+            <md-card-content>
+                <md-field :class="{'md-invalid' : errors.has('ID')}">
+                    <md-icon class="md-primary">perm_identity</md-icon>
+                    <label>使用者帳號</label>
+                    <md-input v-model.trim="account" name="ID" v-validate="'required'" @keyup.enter="login"></md-input>
+                    <span class="md-error">{{ errors.first('ID') }}</span> 
+                </md-field>
+                <md-field :md-toggle-password="false" :class="{'md-invalid' : errors.has('password')}">
+                    <md-icon class="md-primary">lock_open</md-icon>
+                    <label>使用者密碼</label>
+                    <md-input v-model.trim="password" type="password" name="password" v-validate="'required|min:6'" @keyup.enter="login"></md-input>
+                    <span class="md-error">{{ errors.first('password') }}</span>
+                </md-field>
+            </md-card-content>
+
+            <md-card-actions>
+              <button type="button" class="btn btn-outline-primary btn-block" @click.prevent="login">登入</button>
+            </md-card-actions>
+        </md-card>
+      </div>
+    </transition>
+  </div>
+</div>

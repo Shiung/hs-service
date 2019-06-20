@@ -1,0 +1,65 @@
+@import "../../assets/scss/customer/utilty";
+
+%menuLine{
+  position: absolute;
+  display: inline-block;
+  width: 25px;
+  height: 4px;
+  background-color: $gold-font;//#fff;
+  border-radius: 2px;
+  transition: .2s;
+}
+
+.navbar{
+    box-shadow: 0px 5px 30px rgba(0,0,0,.3);
+    background-color: $customer !important;
+    height: $navHeight;
+
+    a{
+      // color:#fff;
+      color:$gold-font;
+      &:hover{
+        color:$gold-font;//#fff;
+        text-decoration: none;
+      }
+    }
+
+    .menu-hb{
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0;
+      width: 25px;
+      height: 20px; 
+      position: relative;
+      cursor: pointer;
+      .hb-line{
+        @extend %menuLine;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .hb-line-top{
+        @extend %menuLine;
+        top:0;
+      }
+      .hb-line-bottom{
+        @extend %menuLine;
+        bottom:0;
+      }
+    }
+    .hb-line-close{
+      width: 4px !important;
+    }
+    .noticed{
+      &:hover{
+        animation: notice .5s linear infinite both;
+      }
+    }
+}
+
+@keyframes notice {
+  0%{transform: rotateZ(0deg)}
+  25%{transform: rotateZ(-15deg)}
+  50%{transform: rotateZ(0deg)}
+  75%{transform: rotateZ(15deg)}
+  100%{transform: rotateZ(0deg)}
+}

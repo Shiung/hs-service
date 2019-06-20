@@ -1,0 +1,90 @@
+@import "../../assets/scss/customer/utilty";
+
+.sidebar{
+  height: calc( 100vh - #{$navHeight} );
+  width: $sidebarWidth;
+  position: fixed;
+  top:$navHeight; 
+  padding: 10px 0;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition:.2s;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+  .nav-item{
+    white-space: nowrap;
+    >a{
+      color:black;
+      transition:.2s;
+    }
+    >a.router-link-active{
+      // background-color: lighten($customer,10%);
+      background-color: $gold ;//lighten($gold,10%);
+      border-radius: 0 25px 25px 0;
+      color:white;
+    }
+    
+    &:hover{
+      >a{
+        // background-color: lighten($customer,20%);
+        background-color: lighten($gold,10%);
+        border-radius: 0 25px 25px 0;
+        color:white;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+
+// 側邊欄內縮
+.sidebar-sm{
+  width: $sidebarWidth-sm;
+  .nav-item{
+    margin:auto;
+    a.nav-link{
+      display: inline-block;
+      padding: .5rem;
+      border-radius: 25px;
+    }
+  } 
+
+  @media screen and ( min-width:768px ){
+    &:hover{
+      width: $sidebarWidth;
+      .nav-item{
+        margin:0;
+        a.nav-link{
+          display: block;
+          padding: .5rem 1rem;
+          border-radius: 0 25px 25px 0;
+          >span{
+            display: inline !important;
+          }
+        }
+      }
+    }
+  } 
+}
+
+@media screen and ( max-width:767px ){
+  .sidebar{
+    width: calc( 100vw - 15px );
+    height: 0;
+    padding: 0;
+  }
+  .sidebar-sm{
+    height: calc( 100vh - #{$navHeight} );
+    .nav-item{
+      margin:0;
+      a.nav-link{
+        display: block;
+        padding: .5rem 1rem;
+        // border-radius: 0 25px 25px 0;
+        border-radius: 25px;
+      }
+    } 
+  }
+}

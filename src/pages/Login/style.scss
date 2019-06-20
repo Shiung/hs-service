@@ -1,0 +1,9 @@
+@import "../../assets/scss/customer/utilty";
+
+.login{
+  background-color: lighten($customer,30%);
+  height: 100vh;
+  .login-box{
+    width:320px;
+  }
+}

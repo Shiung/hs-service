@@ -1,0 +1,236 @@
+@import "../../assets/scss/customer/utilty";
+
+.tablelist{
+  .md-button{
+    outline: none;
+  }
+  .select-options-top{
+    top: $navHeight;
+    background-color: #fff;
+    padding: 5px 0 5px;
+    box-shadow: 0px 3px 5px rgba(0,0,0,.1);
+  }
+  .VueTables{
+    .VueTables__limit{
+      display: none;
+    }
+    .VueTables__search-field{
+      display: none;
+    }
+    thead{
+      th.width-fix{
+        width: 60px;
+      }
+    }
+    tbody{
+      tr{
+        &:hover{
+          background-color: lighten($customer,30%);
+          color:#fff;
+          box-shadow: 0px 5px 5px rgba(0,0,0,.1);
+          border:none;
+        }
+      }
+    }
+
+    // pagination
+    .VuePagination{
+      display: none;
+      ul{
+        justify-content: center;
+        li{
+          a{
+            background-color: #fff;
+            border-color: transparent;
+            border-radius: 50%;
+            text-decoration: none;
+            outline: none;
+            box-shadow: none;
+            margin: 0 2px;
+          }
+          &.active{
+            a{
+              background-color: $customer;
+              color:#fff;
+            }
+          }
+          &:hover:not(.disabled){
+            a{
+              background-color: lighten($customer,30%) ;
+              color:#fff;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.unUseServer{
+    .VueTables{
+      .VuePagination{
+        display: flex;
+      }
+    }
+  }
+
+
+
+  // 課制pagination
+  .customer-pagination{
+    ul{
+      justify-content: center;
+      li{
+        .pageShow{
+          .md-button{
+            min-width: auto;
+            color:#fff;
+            border-radius: 50px;
+            outline: none;
+            &:hover{
+              &::before{
+                background-color: lighten($customer, 10%);
+              }
+            }
+          }
+        }
+        a.page-link{
+          background-color: #fff;
+          border-color: transparent;
+          border-radius: 50%;
+          text-decoration: none;
+          outline: none;
+          box-shadow: none;
+          margin: 0 2px;
+          border: none;
+        }
+        &.active{
+          a{
+            background-color: $customer;
+            color:#fff;
+          }
+        }
+        &:hover:not(.disabled){
+          a{
+            background-color: lighten($customer,30%) ;
+            color:#fff;
+          }
+        }
+      }
+    }
+  }
+  // 選單列
+  .select-options{
+    .md-button{
+      outline: none;
+    }
+  }
+
+  // 頁數選項
+  .perPg-field{
+    .md-button{
+      min-width: auto;
+      width: 50px;
+      color:#fff;
+      border-radius: 50px;
+      outline: none;
+      &:hover{
+        &::before{
+          background-color: lighten($customer, 10%);
+        }
+      }
+    }
+  }
+
+  // search bar1
+  .search-field{
+    margin: 0;
+    margin-right: 15px;
+    margin-top: -15px;
+  }
+  // search bar2
+  .search-box{
+    position: relative;
+    background-color: #fff;
+    border-radius: 35px;
+    padding: 2px 2px 2px 10px;
+    box-shadow: 
+      0px 0px 1px $customer,
+      0px 3px 5px rgba(0,0,0,.1);
+    .md-button{
+      outline: none;
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+    }
+    input.search-txt{
+      width: 0;
+      width: 160px;
+      border: none;
+      background: none;
+      outline: none;
+      padding:0; 
+    }
+  }
+
+
+  .checkbtnArea.md-checkbox .md-checkbox-container:before{     
+    width: 35px;
+    height: 35px;
+  }
+
+  // 標籤
+  .md-chip{
+    padding: 0 8px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    margin: 1px;
+  }
+
+  // sort icon----------
+  @mixin arrowUp{
+    right: 1em;
+    content: "\2191";
+    @content;
+  }
+  @mixin arrowDown{
+    right: 0.5em;
+    content: "\2193";
+    @content;
+  }
+  .sorticon{
+    &.sort{
+      &:before{
+        @include arrowUp
+      }
+      &:after{
+        @include arrowDown;
+      }
+    }
+
+    &.sort-up{
+      &:before{
+        @include arrowUp{
+          opacity: 1;
+        }
+      }
+      &:after{
+        @include arrowDown{
+          opacity: .3;
+        }
+      }
+    }
+
+    &.sort-down{
+      &:before{
+        @include arrowUp{
+          opacity: .3;
+        }
+      }
+      &:after{
+        @include arrowDown{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

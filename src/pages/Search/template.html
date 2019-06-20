@@ -1,0 +1,22 @@
+<div class="search d-flex flex-column justify-content-center align-items-center">
+  <!-- <span class="md-headline text-hs mb-2">搜尋會員資訊</span> -->
+  <div class="search-box d-flex">
+    <!-- <md-chip md-clickable @click="filter">{{filterStr}}</md-chip> -->
+    <md-menu md-direction="bottom-start">
+        <!-- <md-button md-menu-trigger>Bottom Start</md-button> -->
+        <md-chip md-clickable md-menu-trigger>{{filterStr}}</md-chip>
+  
+        <md-menu-content>
+          <md-menu-item @click="filter(0)">姓名</md-menu-item>
+          <md-menu-item @click="filter(1)">信箱</md-menu-item>
+          <md-menu-item @click="filter(2)">帳號</md-menu-item>
+          <md-menu-item @click="filter(3)">電話</md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    <input class="search-txt" type="text" name="" :placeholder="searchStrPlaceholder" v-model.trim="searchStr" @keyup.enter="searchAct">
+    <md-button class="md-icon-button md-dense md-raised md-primary flex-shrink-0 mx-0" @click="searchAct">
+      <md-icon>search</md-icon>
+      <md-tooltip md-direction="bottom">search</md-tooltip>
+    </md-button>
+  </div>
+</div>

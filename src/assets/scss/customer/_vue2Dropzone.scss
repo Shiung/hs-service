@@ -1,0 +1,9 @@
+#dropzone{
+  &.cusWidthHeight{
+    .dz-complete:not(.dz-processing){
+      img{
+        height: auto !important;
+      }
+    }
+  }
+}

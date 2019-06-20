@@ -1,0 +1,25 @@
+<div class="home">
+  <loading 
+    :active.sync="isLoading"
+    color="rgba(36, 94, 96,1)"
+    :opacity= "loadingOpacity"
+    loader="dots"
+  >
+  </loading>
+  <navBar/>
+
+  <!-- <sideBar/> -->
+  <div class="d-flex justify-content-end">
+    <div class="container-fluid container-box" :class="{'container-box-sm' : meueStatus }">
+      <div class="row">
+          <div class="page-box col-12">
+            <transition name="scale" mode="out-in" appear>
+              <router-view v-if="isShowing"></router-view> 
+            </transition>  
+            <footerBox/>
+          </div>
+      </div>
+    </div>
+  </div> 
+  <vue-snotify></vue-snotify>
+</div>

@@ -1,0 +1,25 @@
+@import "../../assets/scss/customer/utilty";
+
+.home{
+  padding-top: $navHeight ;
+  .container-box{
+    // width: calc( 100% - #{$sidebarWidth} );
+    transition: .2s;
+    margin:0;
+  }
+  .page-box{
+    padding: 30px 0 50px 0;
+    min-height: calc( 100vh - #{$navHeight} ) ;
+    background-color: lighten($customer,30%);
+    position: relative;
+  }
+
+  .container-box-sm{
+    // width: calc( 100% - #{$sidebarWidth-sm} );
+  }
+}
+@media screen and ( max-width: 767px ){
+  .container-box{
+    // width: 100% !important;
+  }
+}

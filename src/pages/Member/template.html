@@ -1,0 +1,143 @@
+<div class="member col-12">
+  <div class="row">
+    <div class="col-12">
+      <md-card>
+        <md-card-header class="d-inline-block" >
+          <div class="md-title d-flex justify-content-center align-items-center">
+            <md-button class="md-icon-button md-dense md-raised mr-2" @click="cancel">
+              <md-icon>keyboard_arrow_left</md-icon>
+              <md-tooltip md-direction="bottom">回上一頁</md-tooltip>
+            </md-button>
+            會員資料
+          </div>
+        </md-card-header>
+        <md-card-content>
+          <div class="row mb-3">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">會員姓名</label>
+              {{memName ? memName : '使用者未輸入'}}
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">會員暱稱</label>
+              {{memNick ? memNick : '使用者未輸入'}}
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">帳號</label>
+              {{memIDnum ? memIDnum : '使用者未輸入'}}
+              <!-- {{memIDnum | IDcheck}} -->
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">生日</label>
+              {{memBirthday ? memBirthday : '使用者未輸入'}}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">信箱</label>
+              {{memMail ? memMail : '使用者未輸入'}}
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 form-group">
+              <label class="cus w-100 mb-0">電話</label>
+              {{memTel ? memTel : '使用者未輸入'}}
+              <md-button class="md-icon-button md-dense md-raised md-primary" style="margin-top:-5px;" @click="phoneChange">
+                <md-icon>build</md-icon>
+                <md-tooltip md-direction="bottom">修改</md-tooltip>
+              </md-button>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
+              <label class="cus w-100 mb-0">會員狀態</label>
+              <span class="badge text-capitalize" :class="{'badge-success' : memStatus == 2 , 'badge-secondary' :  memStatus != 2}">{{memStatus == 2 ? '已認證' : '未認證' }}</span>
+              <md-button v-if="memStatus == 0" class="md-icon-button md-dense md-raised md-primary" style="margin-top:-5px;" @click="statusSwitch">
+                <md-icon>build</md-icon>
+                <md-tooltip md-direction="bottom">修改</md-tooltip>
+              </md-button>
+              <md-button v-if="memStatus == 0" class="md-icon-button md-dense md-raised md-primary" style="margin-top:-5px;" @click="sendSMS">
+                <md-icon>send</md-icon>
+                <md-tooltip md-direction="bottom">發送認證碼</md-tooltip>
+              </md-button>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="row">
+                  <div class="col-12">
+                      <md-card class="data-info graph-bg-green">
+                          <md-card-header class="d-inline-block">
+                              <div class="md-title">
+                                  <md-icon class="md-primary ">payment</md-icon>  
+                              </div>
+                          </md-card-header> 
+                          <md-card-area md-inset>
+                              <md-card-content class="pt-2">
+                                  <div class="md-title text-right font-20">累積點數</div>
+                                  <div class="md-subheading text-right font-14">{{memBonusPoint | currency}}點</div>
+                              </md-card-content> 
+                          </md-card-area>
+                      </md-card> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="row">
+                <div class="col-12">
+                  <md-card class="data-info graph-bg-red">
+                      <md-card-header class="d-inline-block">
+                          <div class="md-title">
+                              <md-icon class="md-primary ">attach_money</md-icon>
+                          </div>
+                      </md-card-header> 
+                      <md-card-area md-inset>
+                          <md-card-content class="pt-2">
+                                <div class="md-title text-right font-20">消費總金額</div>
+                                <div class="md-subheading text-right font-14">NT {{memAccumulate | currency}}</div>
+                          </md-card-content> 
+                      </md-card-area>
+                  </md-card> 
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="row">
+                <div class="col-12">
+                  <md-card class="data-info graph-bg-blue">
+                      <md-card-header class="d-inline-block">
+                          <div class="md-title">
+                              <md-icon class="md-primary ">loyalty</md-icon>
+                          </div>
+                      </md-card-header> 
+                      <md-card-area md-inset>
+                          <md-card-content class="pt-2">
+                                <div class="md-title text-right font-20">可用優惠卷</div>
+                                <div class="md-subheading text-right font-14">{{memCouponUse}}張</div>
+                          </md-card-content> 
+                      </md-card-area>
+                  </md-card> 
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-3 d-flex flex-row justify-content-center">
+                <router-link class="bookmark" :to="{name : 'memAccountrecords' }">點數紀錄</router-link>
+                <router-link class="bookmark" :to="{name : 'memTransactionrecords' }">交易紀錄</router-link>
+                <router-link class="bookmark" :to="{name : 'memTicketholder' }">優惠卷</router-link> 
+            </div>
+            <div class="col-12">
+                <transition name="fade" mode="out-in" appear>
+                  <router-view v-if="isMemShowing"></router-view>
+                </transition>
+            </div>
+          </div>
+          
+        </md-card-content> 
+        <md-card-actions>
+          <md-button class="md-raised md-dense" @click="cancel" :md-ripple="false">回上一頁</md-button>
+        </md-card-actions>       
+      </md-card>
+    </div>  
+  </div>
+</div>

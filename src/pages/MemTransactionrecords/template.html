@@ -1,0 +1,80 @@
+<div class="memTransactionrecords tablelist row">
+  <div class="col-12">
+    <div class="row sticky-top select-options-top">
+      <div class="col-12 d-flex align-items-center justify-content-between flex-wrap-reverse">
+          <div class='d-flex align-items-center justify-content-between select-options'>
+              <md-button class="md-icon-button md-dense md-raised md-primary" @click="refreshData(null)">
+                <md-icon>refresh</md-icon>
+                <md-tooltip md-direction="bottom">refresh</md-tooltip>
+              </md-button>
+              
+              <!-- <md-menu md-size="medium" md-align-trigger>
+                <md-button md-menu-trigger class="md-icon-button md-dense md-raised md-primary">
+                  <md-icon>filter_list</md-icon>
+                  <md-tooltip md-direction="bottom">類別塞選</md-tooltip>
+                </md-button>
+                <md-menu-content>
+                  <md-menu-item class="active" @click="filterType('Coupon')">點數轉出</md-menu-item>
+                  <md-menu-item @click="filterType('TransactionRecord')">點數轉入</md-menu-item>
+                </md-menu-content>
+              </md-menu> -->
+          </div>
+        
+      </div>
+    </div>
+
+    <v-client-table 
+      :data="datatables"
+      :columns="columns" 
+      :options="options"
+      ref="memTransactionrecordsTable"
+    >
+    </v-client-table>
+    
+    <!-- pagenation-customer -->
+    <div class="row col-md-12 justify-content-center customer-pagination">
+      <nav class="text-center">
+        <ul class="pagination" v-if="totalPages !== 1">
+          <li class="page-item" @click="prevPage" :class="{'disabled' : currentPage === 1}">
+            <a class="page-link" href="javascript:;" tabindex="-1">&lt;</a>
+          </li>
+          <li class="page-item">
+            <div class="pageShow">
+                <md-menu md-size="small" md-align-trigger md-direction="bottom-start" >
+                    <md-button class="md-raised md-primary" @click="showDialog = true">{{currentPage}} / {{totalPages}}
+                      <md-tooltip md-direction="bottom">pages</md-tooltip>
+                    </md-button>
+                </md-menu>
+            </div> 
+          </li>
+          <li class="page-item" @click="nextPage" :class="{'disabled' : totalPages === currentPage}">
+            <a class="page-link" href="javascript:;">&gt;</a>
+          </li>
+        </ul>
+        <p class="customer-pagination__count text-center col-md-12" >{{dataInfo}}</p>
+      </nav>
+    </div>
+
+
+  </div>
+    
+  <!-- searchFilter box -->
+  <md-dialog :md-active.sync="showDialog">
+    <md-dialog-title>頁數搜尋</md-dialog-title>
+    <md-dialog-content>
+      <md-field>
+        <label>
+          <md-icon>search</md-icon>
+        </label>
+        <md-input v-model.number.lazy='pageNumber' type="number" min="1" :max="totalPages"></md-input>
+        <span class="md-helper-text">最小頁數:1 / 最大頁數:{{totalPages}}</span>
+      </md-field>
+    </md-dialog-content>
+    
+
+    <md-dialog-actions>
+      <md-button class="md-primary" @click="showDialog = false">close</md-button>
+      <md-button class="md-primary" @click="searchPage">search</md-button>
+    </md-dialog-actions>
+  </md-dialog>
+</div>

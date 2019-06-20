@@ -1,0 +1,196 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "./customer/_utilty";
+@import "./customer/_variables";
+@import "./customer/_table";
+@import "./customer/_datetime";
+@import "./customer/_vue2Dropzone";
+@import "~bootstrap/scss/bootstrap.scss";
+
+
+//vue-material customer
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+@include md-register-theme("default", (
+  primary: $customer,//md-get-palette-color(blue, A200), // The primary color of your application
+  accent: md-get-palette-color(red, A200) // The accent or secondary color
+));
+@import "~vue-material/dist/components/MdField/theme";
+@import "~vue-material/dist/components/MdSwitch/theme";
+@import "~vue-material/dist/components/MdCard/theme";
+@import "~vue-material/dist/components/MdButton/theme";
+@import "~vue-material/dist/components/MdMenu/theme";
+@import "~vue-material/dist/components/MdList/theme";
+@import "~vue-material/dist/components/MdCheckbox/theme";
+@import "~vue-material/dist/components/MdRadio/theme";
+@import "~vue-material/dist/components/MdTable/theme";
+@import "~vue-material/dist/components/MdTooltip/theme";
+@import "~vue-material/dist/components/MdBadge/theme";
+@import "~vue-material/dist/components/MdDialog/theme";
+@import "~vue-material/dist/components/MdChips/theme";
+@import "~vue-material/dist/components/MdProgress/theme";
+@import "~vue-material/dist/components/MdContent/theme";
+@import "~vue-material/dist/components/MdAutocomplete/theme";
+@import "~vue-material/dist/components/MdSteppers/theme";
+
+// vue snotify
+@import "~vue-snotify/styles/material";
+
+// vue datetime
+@import 'vue-datetime/dist/vue-datetime.css';
+.theme-customer .vdatetime-popup__header,
+.theme-customer .vdatetime-calendar__month__day--selected > span > span,
+.theme-customer .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: $customer;
+}
+
+.theme-customer .vdatetime-year-picker__item--selected,
+.theme-customer .vdatetime-time-picker__item--selected,
+.theme-customer .vdatetime-popup__actions__button {
+  color: $customer;
+}
+
+// vue overlay loading
+@import 'vue-loading-overlay/dist/vue-loading.css';
+
+// vue Dropzone
+@import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+//vue transition 換頁動畫
+@import "./customer/_vuetransition";
+
+// 字型
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
+body,html{
+  font-family: ‘cwTeXYen’, sans-serif;
+}
+
+// md-card 客制
+.md-card{
+  margin: 25px 0 50px;
+  padding-top: 1px;
+  .md-card-header{
+    background-color: $gold ;//lighten($gold , 10% ) ;
+    box-shadow: 0 12px 20px -10px rgba(darken($gold, 10%) , .28),
+             0 4px 20px 0px rgba(darken($gold, 10%), .12 ), 
+             0 7px 8px -5px rgba(darken($gold, 10%), .2 );
+    // background-color: lighten($customer , 10% ) ;
+    // box-shadow: 0 12px 20px -10px rgba(darken($customer, 10%) , .28),
+    //          0 4px 20px 0px rgba(darken($customer, 10%), .12 ), 
+    //          0 7px 8px -5px rgba(darken($customer, 10%), .2 );
+    color:#fff;
+    margin: -25px 15px 0;
+    border-radius: 3px;
+    padding: 15px;
+
+    &.d-inline-block{
+      .md-title{
+        margin: 0;
+        line-height: initial;
+        font-size: 18px;
+      }
+    }
+  }
+  .md-card-content{
+    padding:25px 20px 15px;
+  }
+
+  .md-card-actions{
+    padding:8px 20px;
+  }
+
+  // 圖表高度
+  &.data-graph{
+    .md-card-header{
+      padding: $graph-padding 0;
+      height: $graph-height + ( $graph-padding * 2 );
+    }
+  }  
+
+  //藍色
+  &.graph-bg-blue{
+    .md-card-header{
+      background-color: lighten($graph-bg-blue , 10% ) ;
+      box-shadow: 0 12px 20px -10px rgba(darken($graph-bg-blue, 10%) , .28),
+              0 4px 20px 0px rgba(darken($graph-bg-blue, 10%), .12 ), 
+              0 7px 8px -5px rgba(darken($graph-bg-blue, 10%), .2 );
+    } 
+  }
+  //綠色
+  &.graph-bg-green{
+    .md-card-header{
+      background-color: lighten($graph-bg-green , 10% ) ;
+      box-shadow: 0 12px 20px -10px rgba(darken($graph-bg-green, 10%) , .28),
+              0 4px 20px 0px rgba(darken($graph-bg-green, 10%), .12 ), 
+              0 7px 8px -5px rgba(darken($graph-bg-green, 10%), .2 );
+    } 
+  } 
+  //橘色
+  &.graph-bg-orange{
+    .md-card-header{
+      background-color: lighten($graph-bg-orange , 10% ) ;
+      box-shadow: 0 12px 20px -10px rgba(darken($graph-bg-orange, 10%) , .28),
+              0 4px 20px 0px rgba(darken($graph-bg-orange, 10%), .12 ), 
+              0 7px 8px -5px rgba(darken($graph-bg-orange, 10%), .2 );
+    } 
+  } 
+
+  //紅色
+  &.graph-bg-red{
+    .md-card-header{
+      background-color: lighten($graph-bg-red , 10% ) ;
+      box-shadow: 0 12px 20px -10px rgba(darken($graph-bg-red, 10%) , .28),
+              0 4px 20px 0px rgba(darken($graph-bg-red, 10%), .12 ), 
+              0 7px 8px -5px rgba(darken($graph-bg-red, 10%), .2 );
+    } 
+  } 
+
+  //紅色
+  &.graph-bg-white{
+    .md-card-header{
+      background-color: lighten(white , 10% ) ;
+      box-shadow: 0 12px 20px -10px rgba(darken(white, 10%) , .28),
+              0 4px 20px 0px rgba(darken(white, 10%), .12 ), 
+              0 7px 8px -5px rgba(darken(white, 10%), .2 );
+    } 
+  } 
+
+
+
+  //dashboard info 
+  &.data-info{
+    .md-card-content{
+      padding:0px 20px 15px;
+      margin-top: -40px;
+    }
+  }
+}
+
+
+// 頁籤
+.bookmark{
+  text-decoration: none !important;
+  padding: 5px 20px;
+  // border-radius: 3px ;
+  border: 1px solid ; 
+  color: #888 !important;
+  // border-color:transparent;
+  border-color:#efefef;
+  &:first-child{
+    border-radius: 5px 0 0 5px;
+  }
+  &:last-child{
+    border-radius: 0 5px 5px 0;
+  }
+  &.router-link-exact-active{
+    // border-color:currentColor;
+    // box-shadow: 0px -2px 10px inset;
+    border-color:$gold;
+    // box-shadow: 0px -2px 10px inset $gold;
+    background-color: $gold;
+    color: #fff !important;
+  }
+  &:hover{
+    // border-color:currentColor;
+    border-color:$gold;
+  }
+}
