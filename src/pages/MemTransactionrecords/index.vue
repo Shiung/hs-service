@@ -6,14 +6,15 @@ export default {
   name: 'memTransactionrecords',
   data () {
     return {
-      columns: ['transfer_action', 'description', 'updated_at', 'transaction_recordsable_data', 'total_sum', 'point', 'discount_value', 'actual_price'],
+      columns: ['status', 'description', 'updated_at', 'transaction_recordsable_data', 'total_sum', 'point', 'discount_value', 'actual_price'],
       options: {
         headings: {
           updated_at: '交易時間',
           description: '說明',
           balance: '剩餘點數',
           point: '點數',
-          transfer_action: '交易狀態',
+          status: '交易狀態',
+          // transfer_action: '交易狀態',
           transaction_recordsable_data: '櫃位名稱',
           actual_price: '發票金額',
           discount_value: '優惠折抵',
@@ -49,7 +50,7 @@ export default {
             return DateTime.fromSQL(row.updated_at).setLocale('zh-TW').toFormat('yyyy/MM/dd HH:mm:ss')
           },
           point: function (h, row, index) {
-            let transfer = row.status === 0 ? '+' : '-'
+            let transfer = row.status === 2 || row.status === 6 ? '-' : '+'
             return `${transfer} ${currencyFn(row.point)}`
             // return `${currencyFn(row.point)}`
           },
@@ -67,6 +68,44 @@ export default {
           },
           actual_price: function (h, row, index) {
             return `NT ${currencyFn(row.actual_price)}`
+          },
+          status: function (h, row, index) {
+            let s = ''
+            let className = ''
+            let str = 'badge badge-pill text-capitalize '
+            switch (row.status) {
+              case 0:
+                s = '交易成立'
+                className = str.concat('badge-warning text-white')
+                break
+              case 1:
+                s = '交易給點'
+                className = str.concat('badge-success')
+                break
+              case 2:
+                s = '交易取消'
+                className = str.concat('badge-danger')
+                break
+              case 3:
+                s = '交易補登成立'
+                className = str.concat('bg-yellow text-white')
+                break
+              case 4:
+                s = '交易補登驗證'
+                className = str.concat('badge-warning text-white')
+                break
+              case 5:
+                s = '交易補登給點'
+                className = str.concat('badge-success')
+                break
+              case 6:
+                s = '交易補登取消'
+                className = str.concat('badge-danger')
+                break
+              default:
+                break
+            }
+            return <span class={className}>{s}</span>
           },
           transfer_action: function (h, row, index) {
             let s = ''

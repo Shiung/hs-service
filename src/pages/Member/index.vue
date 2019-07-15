@@ -15,7 +15,13 @@ export default {
       memBonusPoint: '',
       memAccumulate: '',
       memCouponUse: '',
-      list: {}
+      list: {},
+      device: '',
+      gender: '',
+      employedStatus: '',
+      // 修改性別
+      showGenderDialog: false,
+      radioGender: ''
     }
   },
   computed: {
@@ -29,6 +35,16 @@ export default {
     },
     memAccountrecordsPath () {
       return `member?searchFields=${this.searchFields}&search=${this.search}`
+    },
+    genderType () {
+      switch (this.gender) {
+        case 0:
+          return '女'
+        case 1:
+          return '男'
+        default:
+          return '不透露'
+      }
     }
   },
   methods: {
@@ -47,6 +63,9 @@ export default {
       this.memBonusPoint = this.memberInfo.bonus_point
       this.memAccumulate = this.memberInfo.accumulate
       this.memCouponUse = this.memberInfo.coupon
+      this.employedStatus = this.memberInfo.is_employed
+      this.device = this.memberInfo.device_type
+      this.gender = this.memberInfo.gender
     },
     existQueryCheck () {
       if (!this.search || !this.searchFields) {
@@ -210,6 +229,165 @@ export default {
         this.$snotify.success(`簡訊已發送`, {
           timeout: 10000
         })
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          this.remove_cookie()
+          this.$router.replace({name: 'login'})
+        } else if (error.response.status === 429) {
+          this.$swal({
+            title: '請求太頻繁,請於兩分鐘後再試',
+            icon: 'error'
+          })
+        } else console.log(error.response)
+      }).then(() => {
+      })
+    },
+    mailChange () {
+      this.$swal({
+        title: `修改此會員[${this.memName}]信箱!`,
+        // text: `是否要修改此會員[${this.memName}]的電話?`,
+        content: {
+          element: 'input',
+          attributes: {
+            placeholder: '輸入新的信箱',
+            type: 'text'
+          }
+        },
+        icon: 'warning'
+      })
+        .then((value) => {
+          if (value === null) return
+          let input = value.trim()
+          if (input) {
+            this.$swal({
+              title: '信箱變更',
+              text: `${input}`,
+              icon: 'warning',
+              buttons: {
+                cancel: '取消變更!',
+                ok: {
+                  text: '確認變更!',
+                  value: true
+                }
+              }
+            })
+              .then((value) => {
+                if (value) {
+                  let data = {
+                    'email': input
+                  }
+                  this.updateAxios(data)
+                }
+              })
+          } else {
+            this.$swal({
+              title: '請輸入新的信箱!',
+              icon: 'error'
+            })
+          }
+        })
+    },
+    employedStatusSwitch () {
+      let swaltitle = '設定為員工!'
+      let swalText = `是否要設定此會員[${this.memName}]為員工?`
+      if (this.employedStatus) {
+        swaltitle = '設定為非員工!'
+        swalText = `是否要設定此會員[${this.memName}]為非員工?`
+      }
+      this.$swal({
+        title: swaltitle,
+        text: swalText,
+        icon: 'warning',
+        buttons: {
+          cancel: '取消!',
+          ok: {
+            text: '確認!',
+            value: true
+          }
+        }
+      })
+        .then((value) => {
+          if (value) {
+            let data = {
+              'is_employed': this.employedStatus === 1 ? 0 : 1
+            }
+            this.updateAxios(data)
+          }
+        })
+    },
+    genderChange () {
+      this.showGenderDialog = false
+      let selectGender = Number(this.radioGender)
+      let genderName = ''
+      switch (selectGender) {
+        case 0:
+          genderName = '女'
+          break
+        case 1:
+          genderName = '男'
+          break
+        case 2:
+          genderName = '不透露'
+          break
+        default:
+          genderName = '錯邊'
+          break
+      }
+      this.$swal({
+        title: `修改此會員[${this.memName}]的性別!`,
+        text: `性別確定修改成"${genderName}"`,
+        icon: 'warning'
+      })
+        .then((value) => {
+          if (value) {
+            let data = {
+              'gender': selectGender
+            }
+            this.updateAxios(data)
+          }
+        })
+    },
+    // 停用帳號 (軟刪除)
+    memberTrash () {
+      let acount = this.memIDnum
+      this.$swal({
+        title: '停用帳號',
+        text: `是否要停用此帳號"${acount}"`,
+        icon: 'warning',
+        buttons: {
+          cancel: '取消!',
+          ok: {
+            text: '確認!',
+            value: true
+          }
+        }
+      })
+        .then((value) => {
+          if (value) {
+            let id = this.memID
+            this.trashAxios(id, acount)
+          }
+        })
+    },
+    trashAxios (id, acount) {
+      let url = `${process.env.API_HOST}v1/admin/member/${id}`
+      this.axios.delete(url, {
+        headers: {
+          'Authorization': this.tokenVal,
+          'Accept': 'application/json'
+        }
+      }).then((res) => {
+        if (res.headers.authorization) {
+          this.token_update(res.headers.authorization)
+        }
+
+        // 成功
+        this.$snotify.error(`會員帳號${acount}已被停用`, {
+          timeout: 10000
+        })
+
+        // 導會會員清單頁面
+        this.$router.replace({name: 'homepage'})
       }).catch((error) => {
         if (error.response.status === 401) {
           this.remove_cookie()
